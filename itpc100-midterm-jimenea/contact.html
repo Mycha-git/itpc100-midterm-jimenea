@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get in Touch — Jimenea Tech Solutions</title>
+
+    <!-- ① Meta description -->
+    <meta name="description" content="Contact Jimenea Tech Solutions. Tell us about your project and we'll get back to you within 24 hours.">
+    <meta name="author" content="Mycha Shem Jimenea">
+    <meta property="og:title" content="Get in Touch — Jimenea Tech Solutions">
+    <meta property="og:description" content="Have a project in mind? Reach out and let's build something together.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Requirement A: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Requirement B: Internal CSS -->
+    <style>
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
+        @keyframes checkPop {
+            0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+            60%  { transform: scale(1.2) rotate(4deg);  opacity: 1; }
+            100% { transform: scale(1) rotate(0deg);    opacity: 1; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Card --- */
+        .contact-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 520px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+            transition: box-shadow 0.3s ease;
+            border-top: 3px solid transparent;
+            border-image: var(--brand-gradient) 1;
+        }
+
+        /* --- Header — section-a + gradient divider --- */
+        .contact-header {
+            padding: 28px 36px 24px;
+            background-color: var(--section-a);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease, gap 0.2s ease;
+            width: fit-content;
+        }
+        .back-link:hover { color: var(--accent); gap: 9px; }
+        .back-link i { font-size: 11px; }
+
+        .contact-header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(22px, 5vw, 27px);
+            font-weight: 400;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-header p {
+            font-size: 14px;
+            color: var(--text-sub);
+            font-weight: 300;
+            line-height: 1.65;
+        }
+
+        /* --- Info strip — section-c + gradient divider --- */
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: var(--section-c);
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+
+        .info-item {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 1px solid var(--divider);
+            border-bottom: 1px solid var(--divider);
+        }
+        .info-item:nth-child(even)          { border-right: none; }
+        .info-item:nth-last-child(-n+2)     { border-bottom: none; }
+
+        .info-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: var(--brand-gradient);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .info-value { font-size: 13px; color: var(--text-sub); }
+
+        /* --- Form — section-b + gradient divider --- */
+        .form-body {
+            padding: 28px 36px;
+            background-color: var(--section-b);
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        label .req { color: var(--accent); margin-left: 2px; }
+
+        input, select, textarea {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 11px 14px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.5s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        input::placeholder, textarea::placeholder { color: var(--text-muted); font-weight: 300; }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.10);
+        }
+        input.error, select.error, textarea.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.10);
+        }
+        textarea { resize: vertical; min-height: 110px; }
+
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 12px;
+        }
+
+        .field-error { font-size: 11px; color: #ef4444; font-weight: 500; display: none; }
+        .field-error.visible { display: block; }
+
+        /* --- Form footer --- */
+        .form-footer {
+            padding: 22px 36px;
+            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: background-color 0.5s ease;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px 24px;
+            background: var(--brand-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 3px 12px rgba(var(--accent-rgb), 0.28);
+        }
+        .submit-btn:hover:not(:disabled) {
+            opacity: 0.88;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.38);
+        }
+        .submit-btn:active:not(:disabled) { transform: translateY(0); }
+        .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+        .spinner {
+            width: 14px; height: 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
+
+        .privacy-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .privacy-note i { font-size: 11px; }
+
+        /* --- Success screen --- */
+        .success-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 56px 36px;
+            gap: 16px;
+            background-color: var(--card-bg);
+            transition: background-color 0.5s ease;
+        }
+        .success-screen.visible { display: flex; }
+        .success-icon {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            background: var(--brand-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #fff;
+            animation: checkPop 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+            box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.30);
+        }
+        .success-screen h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px; font-weight: 400;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .success-screen p {
+            font-size: 14px; color: var(--text-sub);
+            font-weight: 300; line-height: 1.65;
+            max-width: 320px;
+        }
+        .back-home-btn {
+            margin-top: 8px;
+            padding: 11px 28px;
+            background: var(--brand-gradient);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+            box-shadow: 0 3px 12px rgba(var(--accent-rgb), 0.28);
+        }
+        .back-home-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+        /* --- Responsive --- */
+        @media (max-width: 540px) {
+            .contact-header, .form-body, .form-footer { padding-left: 20px; padding-right: 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+            .contact-info { grid-template-columns: 1fr; }
+            .info-item { border-right: none; }
+            .info-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--divider); }
+            .info-item:last-child { border-bottom: none; }
+        }
+
+    </style>
+</head>
+<body class="light-mode">
+
+    <!-- ⑤ Page transition overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- ④ Theme toggle with active mode dot -->
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+        <span id="themeLabel">Dark mode</span>
+        <span class="mode-dot"></span>
+    </button>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-icon"><i class="fas fa-check"></i></div>
+        <div class="toast-text">
+            <span class="toast-title" id="toastTitle">Done!</span>
+            <span class="toast-sub"   id="toastSub">Action completed.</span>
+        </div>
+    </div>
+
+    <main>
+        <div class="contact-card" role="main">
+
+            <!-- Header -->
+            <div class="contact-header grad-divider">
+                <a href="index.html"
+                   class="back-link"
+                   onclick="navigateTo(event, 'index.html')">
+                    <i class="fas fa-arrow-left"></i> Back to profile
+                </a>
+                <h1>Get in Touch</h1>
+                <p>Have a project in mind or want to collaborate? Fill out the form and we'll get back to you within 24 hours.</p>
+            </div>
+
+            <!-- Info strip -->
+            <div class="contact-info grad-divider">
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value">hello@jimeneatech.com</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <div class="info-label">Location</div>
+                        <div class="info-value">Davao City, PH</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <div class="info-label">Response time</div>
+                        <div class="info-value">Within 24 hours</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-briefcase"></i></div>
+                    <div>
+                        <div class="info-label">Availability</div>
+                        <!-- ③ Availability badge inside contact info too -->
+                        <div class="info-value" style="display:flex; align-items:center; gap:6px;">
+                            Open to projects
+                            <span class="availability-badge" style="font-size:10px; padding: 2px 7px 2px 5px;">
+                                <span class="dot"></span>Active
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form class="form-body grad-divider" id="contactForm" novalidate>
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="firstName">First name <span class="req">*</span></label>
+                        <input type="text" id="firstName" placeholder="Juan" autocomplete="given-name">
+                        <span class="field-error" id="firstNameErr">Please enter your first name.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last name <span class="req">*</span></label>
+                        <input type="text" id="lastName" placeholder="Dela Cruz" autocomplete="family-name">
+                        <span class="field-error" id="lastNameErr">Please enter your last name.</span>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="email">Email address <span class="req">*</span></label>
+                        <input type="email" id="email" placeholder="juan@example.com" autocomplete="email">
+                        <span class="field-error" id="emailErr">Please enter a valid email address.</span>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="service">Service needed <span class="req">*</span></label>
+                        <div class="select-wrapper">
+                            <select id="service">
+                                <option value="" disabled selected>Select a service…</option>
+                                <option value="web">Web Development</option>
+                                <option value="design">UI / UX Design</option>
+                                <option value="responsive">Responsive Design</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <span class="field-error" id="serviceErr">Please select a service.</span>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="message">Message <span class="req">*</span></label>
+                        <textarea id="message" placeholder="Tell us about your project or inquiry…"></textarea>
+                        <span class="field-error" id="messageErr">Please enter a message.</span>
+                    </div>
+
+                </div>
+            </form>
+
+            <!-- Form footer -->
+            <!-- Requirement C: Inline CSS -->
+            <div class="form-footer">
+                <button class="submit-btn" id="submitBtn"
+                        onclick="handleSubmit()"
+                        style="letter-spacing: 0.03em;">
+                    <span id="btnLabel">Send Message</span>
+                    <span class="spinner" id="spinner"></span>
+                </button>
+                <p class="privacy-note">
+                    <i class="fas fa-lock"></i>
+                    Your information is kept private and never shared.
+                </p>
+            </div>
+
+            <!-- Success screen -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon"><i class="fas fa-check"></i></div>
+                <h2>Message Sent!</h2>
+                <p>Thanks for reaching out. We'll review your message and get back to you within 24 hours.</p>
+                <a href="index.html"
+                   class="back-home-btn"
+                   onclick="navigateTo(event, 'index.html')">
+                    Back to Profile
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        /* ── ④ Theme toggle ── */
+        function applyTheme(dark) {
+            const body  = document.body;
+            const icon  = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            body.classList.toggle('dark-mode',  dark);
+            body.classList.toggle('light-mode', !dark);
+            icon.className    = dark ? 'fas fa-sun'  : 'fas fa-moon';
+            label.textContent = dark ? 'Light mode'  : 'Dark mode';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.contains('dark-mode');
+            applyTheme(!isDark);
+            showToast(
+                !isDark ? 'Dark mode on'  : 'Light mode on',
+                !isDark ? 'Easy on the eyes.' : 'Back to the light.'
+            );
+        }
+
+        (function () {
+            if (localStorage.getItem('theme') === 'dark') applyTheme(true);
+        })();
+
+        /* ── ③ Toast ── */
+        let toastTimer;
+        function showToast(title, sub) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastSub').textContent   = sub;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        /* ── ⑤ Smooth page transitions ── */
+        function navigateTo(e, url) {
+            e.preventDefault();
+            const overlay = document.getElementById('pageTransition');
+            overlay.classList.add('active');
+            setTimeout(() => { window.location.href = url; }, 350);
+        }
+
+        window.addEventListener('pageshow', () => {
+            document.getElementById('pageTransition').classList.remove('active');
+        });
+
+        /* ── Form validation ── */
+        function validate() {
+            const fields = [
+                { id: 'firstName', errId: 'firstNameErr', check: v => v.trim().length > 0 },
+                { id: 'lastName',  errId: 'lastNameErr',  check: v => v.trim().length > 0 },
+                { id: 'email',     errId: 'emailErr',     check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+                { id: 'service',   errId: 'serviceErr',   check: v => v !== '' },
+                { id: 'message',   errId: 'messageErr',   check: v => v.trim().length > 5 },
+            ];
+            let valid = true;
+            fields.forEach(({ id, errId, check }) => {
+                const el  = document.getElementById(id);
+                const err = document.getElementById(errId);
+                const ok  = check(el.value);
+                el.classList.toggle('error', !ok);
+                err.classList.toggle('visible', !ok);
+                if (!ok) valid = false;
+            });
+            return valid;
+        }
+
+        ['firstName','lastName','email','service','message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                document.getElementById(id).classList.remove('error');
+                document.getElementById(id + 'Err').classList.remove('visible');
+            });
+        });
+
+        function handleSubmit() {
+            if (!validate()) return;
+            const btn     = document.getElementById('submitBtn');
+            const label   = document.getElementById('btnLabel');
+            const spinner = document.getElementById('spinner');
+            btn.disabled          = true;
+            label.textContent     = 'Sending…';
+            spinner.style.display = 'block';
+
+            setTimeout(() => {
+                /* Hide form, show toast, then show success screen */
+                document.getElementById('contactForm').style.display = 'none';
+                document.querySelector('.form-footer').style.display  = 'none';
+                document.getElementById('successScreen').classList.add('visible');
+                /* ③ Toast on successful send */
+                showToast('Message sent!', 'We\'ll get back to you within 24 hours.');
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>

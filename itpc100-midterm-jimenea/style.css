@@ -1,0 +1,288 @@
+/* ================================================
+   Requirement A: External CSS — Global Styles
+   Brand: Cyan #00b4d8 → Blue #4361ee → Purple #7b2ff7
+================================================ */
+
+:root {
+    --bg:              #f4f6fb;
+    --card-bg:         #ffffff;
+    --text-main:       #1a1a2e;
+    --text-sub:        #4a4a6a;
+    --text-muted:      #9090a8;
+    --grad-start:      #00b4d8;
+    --grad-mid:        #4361ee;
+    --grad-end:        #7b2ff7;
+    --brand-gradient:  linear-gradient(120deg, #00b4d8, #4361ee, #7b2ff7);
+    --accent:          #4361ee;
+    --accent-hover:    #3451d1;
+    --accent-rgb:      67, 97, 238;
+    --border:          #e2e4f0;
+    --divider:         #eceef8;
+    --section-a:       #f0f2ff;
+    --section-b:       #f8f9fe;
+    --section-c:       #f0fafd;
+    --tag-bg:          #ede9ff;
+    --tag-text:        #5b21b6;
+    --shadow-sm:       0 1px 3px rgba(67,97,238,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md:       0 4px 16px rgba(67,97,238,0.10), 0 2px 6px rgba(0,0,0,0.04);
+    --shadow-lg:       0 12px 40px rgba(67,97,238,0.13), 0 4px 12px rgba(0,0,0,0.06);
+    --radius:          16px;
+    --toggle-bg:       rgba(26,26,46,0.05);
+    --toggle-hover:    rgba(26,26,46,0.10);
+    --logo-pill-bg:    transparent;
+    --logo-pill-border:rgba(67,97,238,0.12);
+
+    /* Availability badge */
+    --badge-bg:        #dcfce7;
+    --badge-text:      #166534;
+    --badge-dot:       #22c55e;
+}
+
+.dark-mode {
+    --bg:              #0d0d1a;
+    --card-bg:         #13131f;
+    --text-main:       #e8e8f5;
+    --text-sub:        #9090b8;
+    --text-muted:      #55556a;
+    --accent:          #6c8aff;
+    --accent-hover:    #8fa3ff;
+    --accent-rgb:      108, 138, 255;
+    --border:          #222238;
+    --divider:         #1c1c30;
+    --section-a:       #161628;
+    --section-b:       #111120;
+    --section-c:       #131a28;
+    --tag-bg:          #1e1a38;
+    --tag-text:        #a78bfa;
+    --shadow-sm:       0 1px 3px rgba(0,0,0,0.5);
+    --shadow-md:       0 4px 16px rgba(0,0,0,0.5);
+    --shadow-lg:       0 12px 40px rgba(0,0,0,0.6);
+    --toggle-bg:       rgba(255,255,255,0.06);
+    --toggle-hover:    rgba(255,255,255,0.11);
+    --logo-pill-bg:    #ffffff;
+    --logo-pill-border:rgba(255,255,255,0.12);
+    --badge-bg:        #052e16;
+    --badge-text:      #86efac;
+    --badge-dot:       #22c55e;
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* --- Body --- */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Dot grid background */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(67,97,238,0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.5s ease;
+}
+.dark-mode::before {
+    background-image: radial-gradient(circle, rgba(108,138,255,0.07) 1px, transparent 1px);
+}
+
+/* --- Page transition overlay --- */
+.page-transition {
+    position: fixed;
+    inset: 0;
+    background: var(--brand-gradient);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+.page-transition.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* --- Main wrapper --- */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Gradient divider utility --- */
+/* Replaces plain border-bottom on sections */
+.grad-divider {
+    position: relative;
+}
+.grad-divider::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0,180,216,0.35) 20%,
+        rgba(67,97,238,0.50) 50%,
+        rgba(123,47,247,0.35) 80%,
+        transparent 100%
+    );
+}
+
+/* --- Theme toggle --- */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s ease, border-color 0.2s ease,
+                color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--toggle-hover);
+    box-shadow: var(--shadow-md);
+    color: var(--text-main);
+}
+
+/* Active mode indicator dot */
+.theme-toggle .mode-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    flex-shrink: 0;
+    opacity: 0.85;
+}
+
+.theme-toggle i { font-size: 13px; transition: transform 0.4s ease; }
+.theme-toggle:hover i { transform: rotate(20deg); }
+
+/* --- Toast notification --- */
+.toast {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    white-space: nowrap;
+    /* Gradient top border */
+    border-top: 2px solid transparent;
+    border-image: var(--brand-gradient) 1;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.toast-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.toast-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.toast-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.toast-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* --- Availability badge --- */
+@keyframes badgePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+    70%  { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0);   }
+}
+
+.availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px 4px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.availability-badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--badge-dot);
+    flex-shrink: 0;
+    animation: badgePulse 2s ease-out infinite;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    main { padding: 20px 16px; }
+    .theme-toggle { top: 12px; right: 12px; padding: 8px 12px; font-size: 12px; }
+    .toast { bottom: 16px; font-size: 13px; }
+}

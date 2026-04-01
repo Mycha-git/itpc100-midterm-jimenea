@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimenea Tech Solutions</title>
+
+    <!-- ① Meta description -->
+    <meta name="description" content="Jimenea Tech Solutions — junior web development studio based in the Philippines. We build fast, clean, and scalable websites and digital products.">
+    <meta name="author" content="Mycha Shem Jimenea">
+    <meta property="og:title" content="Jimenea Tech Solutions">
+    <meta property="og:description" content="Where Vision Meets Code. Fast, clean, scalable digital products built in the Philippines.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Requirement A: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Requirement B: Internal CSS -->
+    <style>
+
+        /* --- Keyframes --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+        @keyframes shimmer {
+            0%   { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(300%)  skewX(-15deg); }
+        }
+
+        /* --- Card --- */
+        article {
+            position: relative;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 460px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+            transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+        }
+        article:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg), 0 0 0 3px rgba(var(--accent-rgb), 0.10);
+            border-color: rgba(var(--accent-rgb), 0.25);
+        }
+
+        /* --- Logo banner --- */
+        .logo-banner {
+            width: 100%;
+            padding: 28px 32px 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 3px solid transparent;
+            border-image: var(--brand-gradient) 1;
+            background-color: var(--card-bg);
+            transition: background-color 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        /* ② Gradient divider — replaces plain border-bottom */
+        .logo-banner { padding-bottom: 24px; }
+
+        .logo-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--brand-gradient);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .dark-mode .logo-banner::before { opacity: 0.04; }
+
+        /* Logo pill */
+        .logo-pill {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 14px;
+            background-color: var(--logo-pill-bg);
+            border: 1px solid var(--logo-pill-border);
+            overflow: hidden;
+            transition: background-color 0.4s ease, border-color 0.4s ease,
+                        transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
+        }
+        .dark-mode .logo-pill { box-shadow: 0 4px 24px rgba(67,97,238,0.15); }
+        .logo-pill:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 32px rgba(var(--accent-rgb), 0.20);
+        }
+        .logo-pill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 40%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+            transform: translateX(-100%) skewX(-15deg);
+            pointer-events: none;
+        }
+        .logo-pill:hover::after { animation: shimmer 0.7s ease forwards; }
+
+        .logo-img {
+            width: 100%; height: auto;
+            display: block;
+            padding: 8px 16px;
+        }
+
+        /* ③ Tagline row wrapper */
+        .logo-footer-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        .tagline-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            min-height: 20px;
+        }
+        .tagline {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline-cursor {
+            display: inline-block;
+            width: 1.5px; height: 12px;
+            background-color: var(--accent);
+            border-radius: 1px;
+            animation: blink 0.9s step-end infinite;
+            flex-shrink: 0;
+        }
+        .tagline-cursor.done { opacity: 0; animation: none; }
+
+        /* ② Skills — gradient divider bottom */
+        .skills {
+            padding: 18px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--section-a);
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.02em;
+            border: 1px solid rgba(var(--accent-rgb), 0.12);
+            transition: transform 0.2s ease, box-shadow 0.2s ease,
+                        background 0.2s ease, color 0.2s ease;
+            cursor: default;
+        }
+        .tag:hover {
+            background: var(--brand-gradient);
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.25);
+        }
+
+        /* ② About — gradient divider bottom */
+        .card-body {
+            padding: 22px 32px;
+            text-align: center;
+            background-color: var(--section-b);
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+        .about-text {
+            font-size: 14px;
+            line-height: 1.80;
+            color: var(--text-sub);
+            font-weight: 300;
+        }
+
+        /* ② Social — gradient divider bottom */
+        .social-row {
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--section-c);
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+        .social-row a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px; height: 38px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 15px;
+            text-decoration: none;
+            background-color: var(--card-bg);
+            transition: background 0.2s ease, color 0.2s ease,
+                        border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .social-row a:hover {
+            background: var(--brand-gradient);
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(var(--accent-rgb), 0.30);
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 22px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--card-bg);
+            transition: background-color 0.5s ease;
+        }
+        .cta-btn {
+            width: 100%;
+            padding: 13px 24px;
+            background: var(--brand-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 3px 12px rgba(var(--accent-rgb), 0.30);
+        }
+        .cta-btn:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.40);
+        }
+        .cta-btn:active { transform: translateY(0); }
+        .copyright { font-size: 12px; color: var(--text-muted); text-align: center; }
+
+    </style>
+</head>
+<body class="light-mode">
+
+    <!-- ⑤ Page transition overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- ④ Theme toggle with active mode dot -->
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+        <span id="themeLabel">Dark mode</span>
+        <span class="mode-dot"></span>
+    </button>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon"><i class="fas fa-check"></i></div>
+        <div class="toast-text">
+            <span class="toast-title" id="toastTitle">Done!</span>
+            <span class="toast-sub"  id="toastSub">Action completed.</span>
+        </div>
+    </div>
+
+    <main>
+        <article>
+
+
+            <!-- Logo banner -->
+            <div class="logo-banner grad-divider">
+                <div class="logo-pill">
+                    <img src="assets/official-logo.png"
+                         alt="Jimenea Tech Solutions"
+                         class="logo-img"
+                         loading="lazy">
+                </div>
+                <div class="logo-footer-row">
+                    <div class="tagline-row">
+                        <span class="tagline" id="tagline"></span>
+                        <span class="tagline-cursor" id="cursor"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="skills grad-divider">
+                <span class="tag">Web Development</span>
+                <span class="tag">UI / UX Design</span>
+                <span class="tag">HTML &amp; CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Responsive Design</span>
+            </div>
+
+            <!-- About -->
+            <div class="card-body grad-divider">
+                <p class="about-text">
+                    We build fast, clean, and scalable digital products — from concept to launch.
+                    Whether you need a website, a system, or a strategy, we make technology work for you.
+                </p>
+            </div>
+
+            <!-- Socials -->
+            <div class="social-row grad-divider">
+                <a href="https://www.linkedin.com/in/mycha-shem-jimenea-19b150330" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/Mycha-git" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.facebook.com/mycha.jimenea.2025/" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <!-- Requirement C: Inline CSS -->
+            <div class="card-footer">
+                <a href="contact.html"
+                   class="cta-btn"
+                   style="background: var(--brand-gradient);"
+                   onclick="navigateTo(event, 'contact.html')">
+                    Get in Touch
+                </a>
+                <p class="copyright" style="color: var(--text-muted);">
+                    &copy; 2026 Jimenea Tech Solutions
+                </p>
+            </div>
+
+        </article>
+    </main>
+
+    <script>
+        /* ── ④ Theme toggle with active state dot ── */
+        function applyTheme(dark) {
+            const body  = document.body;
+            const icon  = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            body.classList.toggle('dark-mode',  dark);
+            body.classList.toggle('light-mode', !dark);
+            icon.className   = dark ? 'fas fa-sun'  : 'fas fa-moon';
+            label.textContent = dark ? 'Light mode' : 'Dark mode';
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.contains('dark-mode');
+            applyTheme(!isDark);
+            showToast(
+                !isDark ? 'Dark mode on'  : 'Light mode on',
+                !isDark ? 'Easy on the eyes.' : 'Back to the light.'
+            );
+        }
+
+        /* Apply saved theme immediately */
+        (function () {
+            if (localStorage.getItem('theme') === 'dark') applyTheme(true);
+        })();
+
+        /* ── Toast ── */
+        let toastTimer;
+        function showToast(title, sub) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastSub').textContent   = sub;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        /* ── ⑤ Smooth page transitions ── */
+        function navigateTo(e, url) {
+            e.preventDefault();
+            const overlay = document.getElementById('pageTransition');
+            overlay.classList.add('active');
+            setTimeout(() => { window.location.href = url; }, 350);
+        }
+
+        /* Fade in on arrival */
+        window.addEventListener('pageshow', () => {
+            const overlay = document.getElementById('pageTransition');
+            overlay.classList.remove('active');
+        });
+
+        /* ── Typing tagline ── */
+        const taglineText = 'Where Vision Meets Code.';
+        const taglineEl   = document.getElementById('tagline');
+        const cursorEl    = document.getElementById('cursor');
+        let i = 0;
+        setTimeout(function type() {
+            if (i < taglineText.length) {
+                taglineEl.textContent += taglineText[i++];
+                setTimeout(type, 55);
+            } else {
+                cursorEl.classList.add('done');
+            }
+        }, 800);
+    </script>
+
+</body>
+</html>
